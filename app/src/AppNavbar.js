@@ -26,7 +26,7 @@ export default class AppNavbar extends Component {
               href="https://twitter.com/cpressler">@cpressler</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://github.com/oktadeveloper/okta-spring-boot-react-crud-example">GitHub</NavLink>
+            <NavLink href="https://github.com/cpressler/spring-react.git">GitHub</NavLink>
           </NavItem>
         </Nav>
       </Collapse>
