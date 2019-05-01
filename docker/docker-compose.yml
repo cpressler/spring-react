@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+  backend:
+    build:
+      context: ../
+      dockerfile: ./docker/spring-react-qatest-be.Dockerfile
+      args:
+        - POM_VERSION=${POM_VERSION}
+        - ARTIFACT_ID=${ARTIFACT_ID}
+        - version=${version}
+    image: "softvisionlvcp/spring-react-qatest-be:latest"
+    ports:
+      - "8180:8180"
+
+
+  frontend:
+    build:
+      context: ../
+      dockerfile: ./docker/2stage-ui.Dockerfile
+    image: softvisionlvcp/spring-react-qatest-ui:latest
+    depends_on:
+      - backend

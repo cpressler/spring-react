@@ -6,6 +6,7 @@ Please read [Use React and Spring Boot to Build a Simple CRUD App](https://devel
 
 **Prerequisites:** [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [Node.js 8+](https://nodejs.org/), and [Yarn](https://yarnpkg.com/en/docs/install). You can use npm instead of Yarn, but you'll need to translate the Yarn syntax to npm.
 
+Testing also requires the Selenium Drivers as well [Chrome](https://chromedriver.storage.googleapis.com/index.html?path=74.0.3729.6), [Firefox/Gecko](https://github.com/mozilla/geckodriver/releases)
 
 * [Getting Started](#getting-started)
 * [Links](#links)
@@ -49,3 +50,10 @@ This example uses the following open source libraries:
 ## License
 
 Apache 2.0, see [LICENSE](LICENSE).
+
+
+Remove all containers 
+docker rm $(docker ps -a -q) <BR>
+
+Remove all images 
+docker rmi $(docker images -q)
