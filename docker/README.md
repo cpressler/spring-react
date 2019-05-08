@@ -12,7 +12,7 @@ docker run -p 8180:8180  softvisionlvcp/spring-react-qatest-be:latest
 
 * Frontend UI 
 ```bash
-docker run -p 8180:8180  softvisionlvcp/spring-react-qatest-uibe:latest
+docker run -p 9000:80   softvisionlvcp/spring-react-qatest-ui:latest
 ```
  
 ## Docker Compose Example

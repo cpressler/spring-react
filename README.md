@@ -36,6 +36,29 @@ To run the client, cd into the `app` folder and run:
 yarn && yarn start
 ```
 
+#### Docker image and compose
+To build the images for both front end and backend  
+```bash
+mvn clean install -P build-docker-image  
+```
+
+
+To build the images for both front end and backend  and push to docker hub  
+```bash
+mvn clean install -P build-push-docker-image  
+```
+
+#### Docker Compose
+
+Run the two containers so the frontend can talke to the server  API
+```bash
+cd docker
+docker compose up    # this will bring up both containers in interactive mode  
+```
+
+Go to a browser and type in
+localhost:9000  # should bring up the main page.
+
 ## Links
 
 This example uses the following open source libraries:

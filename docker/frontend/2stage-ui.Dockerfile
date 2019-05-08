@@ -7,7 +7,10 @@ RUN yarn build
 
 # Stage 2 - the production environment
 FROM nginx:alpine
-#COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+RUN apk add --no-cache curl
+
 COPY --from=react-build /app/build /usr/share/nginx/html
+COPY ./docker/frontend/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

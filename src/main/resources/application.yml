@@ -16,3 +16,17 @@ logging:
 
 server:
   port : 8180
+
+
+management:
+  endpoints:
+    web:
+      cors:  # CORS SETUP
+        allowed-origins: ${ALLOW_ORIGINS:"http://serverapi ,http://localhost:9000"}
+        allowed-methods: ${ALLOWED_METHODS:"GET, POST, PUT, DELETE"}
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+

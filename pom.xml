@@ -34,7 +34,14 @@
 
     <dependencies>
         <dependency>
-
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -84,6 +91,21 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
+        </dependency>
+
+        <!-- rest assured deps -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>3.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- rest assured deps -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>1.4.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -272,24 +294,6 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                     </plugin>
                     <!-- no need to rename the file anymore -->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-antrun-plugin</artifactId>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>copy</id>-->
-<!--                                <phase>install</phase>-->
-<!--                                <configuration>-->
-<!--                                    <target name="copy and rename file">-->
-<!--                                        <copy file="${project.build.directory}/${project.artifactId}-${project.version}.jar" tofile="${project.build.directory}/spring-react.jar" />-->
-<!--                                    </target>-->
-<!--                                </configuration>-->
-<!--                                <goals>-->
-<!--                                    <goal>run</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
                     <!-- -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -314,5 +318,48 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>build-push-docker-image</id>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+            <activation>
+                <property>
+                    <name>dockerImage</name>
+                    <value>build</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                    </plugin>
+                    <!-- -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-push-docker-image</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <workingDirectory>${project.basedir}</workingDirectory>
+                                    <executable>${project.basedir}/docker/scripts/docker.sh</executable>
+                                    <arguments>
+                                        <argument>${project.version}</argument>
+                                        <argument>p</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 </project>

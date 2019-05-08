@@ -1,9 +1,9 @@
 version: "3.5"
 services:
-  backend:
+  serverapi:
     build:
       context: ../
-      dockerfile: ./docker/spring-react-qatest-be.Dockerfile
+      dockerfile: ./docker/server/spring-react-qatest-be.Dockerfile
       args:
         - POM_VERSION=${POM_VERSION}
         - ARTIFACT_ID=${ARTIFACT_ID}
@@ -11,12 +11,25 @@ services:
     image: "softvisionlvcp/spring-react-qatest-be:latest"
     ports:
       - "8180:8180"
+    networks:
+      - proxynet
+
 
 
   frontend:
     build:
       context: ../
-      dockerfile: ./docker/2stage-ui.Dockerfile
-    image: softvisionlvcp/spring-react-qatest-ui:latest
+      dockerfile: ./docker/frontend/2stage-ui.Dockerfile
+    image: "softvisionlvcp/spring-react-qatest-ui:latest"
+    command: [nginx-debug, '-g', 'daemon off;']
+    ports:
+      - "9000:80"
+    networks:
+      - proxynet
     depends_on:
-      - backend
+      - serverapi
+
+
+networks:
+  proxynet:
+    name: custom_network

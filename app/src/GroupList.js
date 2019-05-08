@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 class GroupList extends Component {
 
+
+
   constructor(props) {
     super(props);
     this.state = {groups: [], isLoading: true};
@@ -13,8 +15,10 @@ class GroupList extends Component {
 
   componentDidMount() {
     this.setState({isLoading: true});
+   const apiurl = '/api/groups'
+   console.log(apiurl)
+    fetch(apiurl)
 
-    fetch('api/groups')
       .then(response => response.json())
       .then(data => this.setState({groups: data, isLoading: false}));
   }

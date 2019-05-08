@@ -19,11 +19,12 @@ mkdir /opt/services/spring-react-qatest
 
 
 COPY ./spring-react-qatest.service /usr/lib/systemd/system/spring-react-qatest.service
+COPY ./spring-react-qatest.sysconfig /etc/sysconfig/spring-react-qatest
 COPY $sourceJar /opt/services/spring-react-qatest/spring-react-qatest-boot.jar
 RUN chmod 666 /usr/lib/systemd/system/spring-react-qatest.service && \
 ln -s /usr/lib/systemd/system/spring-react-qatest.service /etc/systemd/system/multi-user.target.wants/spring-react-qatest.service
 
-ADD ./docker/config/docker-entrypoint.sh /docker-entrypoint.sh
+ADD ./docker/server/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
