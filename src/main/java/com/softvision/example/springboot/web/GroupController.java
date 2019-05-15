@@ -39,7 +39,9 @@ class GroupController {
     @GetMapping("/groups")
     Collection<Group> groups() {
         log.info("Request to list groups");
-        return groupRepository.findAll();
+        Collection<Group> groups = groupRepository.findAll();
+        log.info("groups found");
+        return groups;
     }
 
     @ApiOperation(value = "View a group", response = Group.class)
@@ -54,7 +56,8 @@ class GroupController {
     ResponseEntity<?> getGroup(@PathVariable Long id) {
         log.info("Request to find group: {}", id);
         Optional<Group> group = groupRepository.findById(id);
-        return group.map(response -> ResponseEntity.ok().body(response))
+        log.info("Response groupID: {} : group", id, group);
+        return group.map(response ->  ResponseEntity.ok().body(response))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

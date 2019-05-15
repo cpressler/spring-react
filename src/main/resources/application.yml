@@ -12,7 +12,16 @@ logging:
   file: ${logging.path}/react.log
   level:
     root: info
-
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: debug
+    com:
+      softvision:
+        example:
+          springboot:
+            logging: debug
 
 server:
   port : 8180
