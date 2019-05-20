@@ -1,4 +1,4 @@
-package com.softvision.example.springboot;
+package com.softvision.example.springboot.restassured;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;

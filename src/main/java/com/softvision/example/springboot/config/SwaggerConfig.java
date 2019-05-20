@@ -22,7 +22,7 @@ import javax.servlet.ServletContext;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig extends WebMvcConfigurationSupport {
-    String swaggerDocPrefix = "/docs"; // blank for now
+    String swaggerDocPrefix = ""; // blank for now
     @Bean
     public Docket groupsApi(ServletContext servletContext) {
         return new Docket(DocumentationType.SWAGGER_2)

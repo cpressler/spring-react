@@ -1,4 +1,4 @@
-package com.softvision.example.springboot;
+package com.softvision.example.springboot.selenium;
 
 
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class SimpleAutomationTest {
         //Step 4- Close Driver
         driver.close();
 
-        //Step 5- Quit Driver
+        //Step 5- Quit Driver , otherwise it leaves a zombie browser running
         driver.quit();
     }
 }
