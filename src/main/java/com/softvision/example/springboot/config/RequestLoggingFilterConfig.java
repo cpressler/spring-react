@@ -21,8 +21,8 @@ public class RequestLoggingFilterConfig {
         RequestResponseLoggingFilter filter
                 = new RequestResponseLoggingFilter();
         filter.setIncludeQueryString(true);
-        filter.setIncludePayload(true);
-        filter.setIncludeResponseData(true);
+        filter.setIncludePayload(false);
+        filter.setIncludeResponseData(false);
         filter.setMaxPayloadLength(length);
         filter.setIncludeHeaders(true);
         filter.setAfterMessagePrefix("After Request :");

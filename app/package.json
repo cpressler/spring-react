@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "newman": "^4.3.0",
+    "prettyjson": ">=1.2.1",
+    "jsonfile": ">=5.0.0",
+    "lodash": ">=4.15.0",
     "bootstrap": "4.3.1",
-    "react": "^16.6.0",
-    "react-cookie": "3.0.4",
+    "react": "^16.8.6",
+    "react-cookie": "3.1.2",
     "react-dom": "^16.6.0",
     "react-router-dom": "4.3.1",
-    "react-scripts": "2.1.0",
-    "reactstrap": "6.5.0"
+    "react-scripts": "2.1.8",
+    "reactstrap": "8.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

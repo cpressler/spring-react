@@ -30,6 +30,8 @@
         <version.swagger.annotations>1.5.18</version.swagger.annotations>
         <plugin.version.git-commit-id-plugin>2.2.4</plugin.version.git-commit-id-plugin>
         <start-class>com.softvision.example.springboot.JugToursApplication</start-class>
+        <skip.unit.tests>false</skip.unit.tests>
+        <skip.integration.tests>true</skip.integration.tests>
     </properties>
 
     <pluginRepositories>
@@ -184,14 +186,13 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${version.springframework.boot}</version>
                 <executions>
-
                     <execution>
                         <id>repackage</id>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-<!--                            <mainClass>${start-class}</mainClass>-->
+                            <mainClass>${start-class}</mainClass>
                             <classifier>boot</classifier>
                         </configuration>
                     </execution>
@@ -201,7 +202,32 @@
                             <goal>build-info</goal>
                         </goals>
                     </execution>
+<!--                    <execution>-->
+<!--                        <id>pre-integration-test</id>-->
+<!--                        <goals>-->
+<!--                            <goal>start</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>post-integration-test</id>-->
+<!--                        <goals>-->
+<!--                            <goal>stop</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18</version>
+                <configuration>
+                    <!-- Skips unit tests if the value of skip.unit.tests property is true -->
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <!-- Excludes integration tests when unit tests are run -->
+                    <excludes>
+                        <exclude>**/IT*.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>pl.project13.maven</groupId>
@@ -222,7 +248,20 @@
                     </execution>
                 </executions>
             </plugin>
-
+<!--            <plugin>-->
+<!--                &lt;!&ndash; Run the JUnit integration tests in an isolated classloader &ndash;&gt;-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--                <version>2.22.2</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>integration-tests</id>-->
+<!--                        <goals>-->
+<!--                            <goal>integration-test</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>com.smartbear.soapui</groupId>
                 <artifactId>soapui-maven-plugin</artifactId>
@@ -352,8 +391,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                     </plugin>
-                    <!-- no need to rename the file anymore -->
-                    <!-- -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
@@ -419,6 +456,124 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>docker-integration-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>2.22.2</version>
+                        <executions>
+                            <execution>
+                                <id>integration-tests</id>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
 
+                    <!-- Setup/Teardown Docker environment for Integration Tests -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>docker-compose-up</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${project.basedir}/src/test/resources/scripts/docker-up.sh</executable>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>integration-tests</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>newman</executable> <!-- install first npm install -g newman -->
+                                    <commandlineArgs>
+                                        run /Users/chesterpressler/Downloads/GroupsApi.postman_collection.json -e   /Users/chesterpressler/Downloads/local-dev.postman_environment.json
+                                    </commandlineArgs>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>docker-compose-down</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${project.basedir}/src/test/resources/scripts/docker-down.sh</executable>
+                                </configuration>
+                            </execution>
+
+                        </executions>
+                    </plugin>
+
+                    <!-- Deploy current build artifact to Docker container -->
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>integration-tests</id>
+            <properties>
+                <!-- onyl run integration tests and not unit tests here -->
+                <skip.unit.tests>true</skip.unit.tests>
+                <skip.integration.tests>false</skip.integration.tests>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>2.22.2</version>
+                        <configuration>
+                            <systemProperties>
+                                <testURL>http://localhost:8180</testURL>
+                            </systemProperties>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>integration-tests</id>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Setup/Teardown  environment for Integration Tests -->
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${version.springframework.boot}</version>
+                        <executions>
+                            <!-- NOTE log levels are controlled by src/main/resources/application.yml
+                                 since this is run outside of the test runner.
+                             -->
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>

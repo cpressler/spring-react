@@ -318,33 +318,48 @@ public abstract class AbstractRequestResponseLoggingFilter extends OncePerReques
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        boolean shouldLog = shouldLog(request);
+
         boolean isFirstRequest = !isAsyncDispatch(request);
 
+        // if we are not logging anything then just continue on
+        if (!shouldLog(request)) {
+            filterChain.doFilter(request, response);
+            logger.info("LoggingFilterDisabled");
+            return;
+        }
 
+        HttpServletRequest requestToUse = request;
+        HttpServletResponse responseToUse = response;
         // wrapper the request/response in a content wrapper so we can have multi acccess to the data
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
-        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
+        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(responseToUse);
 
         if (isIncludePayload() && isFirstRequest && !(request instanceof ContentCachingRequestWrapper)) {
             requestWrapper = new ContentCachingRequestWrapper(request, getMaxPayloadLength());
         }
 
+
         if (isIncludeResponseData()  && !(response instanceof ContentCachingResponseWrapper)) {
-            responseWrapper = new ContentCachingResponseWrapper(response);
+            responseWrapper = new ContentCachingResponseWrapper(responseToUse);
         }
 
-        boolean shouldLog = shouldLog(requestWrapper);
         if (shouldLog && isFirstRequest) {
             beforeRequest(requestWrapper, getBeforeMessage(requestWrapper));
         }
         try {
-            filterChain.doFilter(requestWrapper, responseWrapper);
+            if(isIncludeResponseData()) {
+                filterChain.doFilter(requestToUse, responseWrapper);
+            } else {
+                filterChain.doFilter(requestToUse, responseToUse);
+            }
+
         }
         finally {
             if (shouldLog && !isAsyncStarted(requestWrapper)) {
                 afterRequest(requestWrapper, getAfterMessage(requestWrapper));
             }
-            if ( isIncludeResponseData()  && shouldLog ) {
+            if (isIncludeResponseData()) {
                 afterResponse(responseWrapper, getAfterResponseMessage(responseWrapper));
             }
         }

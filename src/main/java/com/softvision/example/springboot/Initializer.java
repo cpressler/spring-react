@@ -2,7 +2,9 @@ package com.softvision.example.springboot;
 
 import com.softvision.example.springboot.model.Event;
 import com.softvision.example.springboot.model.Group;
-import com.softvision.example.springboot.model.GroupRepository;
+import com.softvision.example.springboot.repository.GroupRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,8 @@ import java.util.stream.Stream;
 
 @Component
 class Initializer implements CommandLineRunner {
+
+    private final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
     private final GroupRepository repository;
 
@@ -34,6 +38,7 @@ class Initializer implements CommandLineRunner {
         djug.setEvents(Collections.singleton(e));
         repository.save(djug);
 
-        repository.findAll().forEach(System.out::println);
+        //repository.findAll().forEach(System.out::println);
+        repository.findAll().forEach(x -> logger.info(x.toString()));
     }
 }

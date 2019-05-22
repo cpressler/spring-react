@@ -1,7 +1,7 @@
-package com.softvision.example.springboot.web;
+package com.softvision.example.springboot.controller;
 
 import com.softvision.example.springboot.model.Group;
-import com.softvision.example.springboot.model.GroupRepository;
+import com.softvision.example.springboot.repository.GroupRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

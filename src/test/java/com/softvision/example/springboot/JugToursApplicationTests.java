@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class JugToursApplicationTests {
 
     @Test
-    //@Ignore
     public void contextLoads() {
     }
 

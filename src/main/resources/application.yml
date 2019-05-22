@@ -8,20 +8,14 @@ debug: false
 
 
 logging:
-  path: /.
+  path: .
   file: ${logging.path}/react.log
   level:
     root: info
-    org:
-      springframework:
-        web:
-          filter:
-            CommonsRequestLoggingFilter: debug
     com:
       softvision:
         example:
-          springboot:
-            logging: debug
+          springboot: debug
 
 server:
   port : 8180

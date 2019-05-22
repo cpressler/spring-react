@@ -27,7 +27,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket groupsApi(ServletContext servletContext) {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.softvision.example.springboot.web"))
+                .apis(RequestHandlerSelectors.basePackage("com.softvision.example.springboot.controller"))
                 .paths(PathSelectors.any())
                 //.paths(regex("/.*"))
                 .build()

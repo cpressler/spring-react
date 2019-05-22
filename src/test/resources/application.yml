@@ -1,0 +1,19 @@
+
+debug: false
+
+#spring:
+#  profiles:
+#    active: @spring.profiles.active@
+
+
+
+logging:
+  path: .
+  file: ${logging.path}/react.log
+  level:
+    root: info
+    com:
+      softvision:
+        example:
+          springboot: info
+
