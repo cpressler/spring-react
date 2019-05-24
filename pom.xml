@@ -406,6 +406,7 @@
                                     <executable>${project.basedir}/docker/scripts/docker.sh</executable>
                                     <arguments>
                                         <argument>${project.version}</argument>
+                                        <argument>i</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -415,14 +416,14 @@
             </build>
         </profile>
         <profile>
-            <id>build-push-docker-image</id>
+            <id>push-docker-image</id>
             <properties>
                 <skipTests>true</skipTests>
             </properties>
             <activation>
                 <property>
                     <name>dockerImage</name>
-                    <value>build</value>
+                    <value>push</value>
                 </property>
             </activation>
             <build>
@@ -458,22 +459,13 @@
         </profile>
         <profile>
             <id>docker-integration-tests</id>
+            <properties>
+                <!-- onyl run integration tests and not unit tests here -->
+                <postman.env>local-dev</postman.env>
+                <skip.integration.tests>false</skip.integration.tests>
+            </properties>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>2.22.2</version>
-                        <executions>
-                            <execution>
-                                <id>integration-tests</id>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
                     <!-- Setup/Teardown Docker environment for Integration Tests -->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -487,7 +479,11 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${project.basedir}/src/test/resources/scripts/docker-up.sh</executable>
+                                    <executable>${project.basedir}/docker/scripts/docker-up.sh</executable>
+                                    <arguments>
+                                        <argument>${project.version}</argument>
+                                        <argument>${postman.env}</argument>
+                                    </arguments>
                                 </configuration>
                             </execution>
                             <execution>
@@ -499,7 +495,7 @@
                                 <configuration>
                                     <executable>newman</executable> <!-- install first npm install -g newman -->
                                     <commandlineArgs>
-                                        run /Users/chesterpressler/Downloads/GroupsApi.postman_collection.json -e   /Users/chesterpressler/Downloads/local-dev.postman_environment.json
+                                        run src/test/resources/postman/GroupsApi.postman_collection.json -e   src/test/resources/postman/envs/${postman.env}.postman_environment.json
                                     </commandlineArgs>
                                 </configuration>
                             </execution>
@@ -510,7 +506,10 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${project.basedir}/src/test/resources/scripts/docker-down.sh</executable>
+                                    <executable>${project.basedir}/docker/scripts/docker-down.sh</executable>
+                                    <arguments>
+                                        <argument>${postman.env}</argument>
+                                    </arguments>
                                 </configuration>
                             </execution>
 

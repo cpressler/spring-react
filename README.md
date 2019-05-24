@@ -4,13 +4,13 @@ This example app shows how to create a Spring Boot API and CRUD (create, read, u
 
 Please read [Use React and Spring Boot to Build a Simple CRUD App](https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot) to see how this app was created.
 
-**Prerequisites:** [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [Node.js 8+](https://nodejs.org/), and [Yarn](https://yarnpkg.com/en/docs/install). You can use npm instead of Yarn, but you'll need to translate the Yarn syntax to npm.
+**Prerequisites:** [Java 8 Oracle or OpenJDK is preferred](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [Node.js 8+](https://nodejs.org/), and [Yarn](https://yarnpkg.com/en/docs/install). You can use npm instead of Yarn, but you'll need to translate the Yarn syntax to npm.
 
 Testing also requires the Selenium Drivers as well [Chrome](https://chromedriver.storage.googleapis.com/index.html?path=74.0.3729.6), [Firefox/Gecko](https://github.com/mozilla/geckodriver/releases)
 
 * [Getting Started](#getting-started)
 * [Links](#links)
-* [Help](#help)
+* [Testing](#testing)
 * [License](#license)
 
 ## Getting Started
@@ -45,7 +45,7 @@ mvn clean install -P build-docker-image
 
 To build the images for both front end and backend  and push to docker hub  
 ```bash
-mvn clean install -P build-push-docker-image  
+mvn install -P push-docker-image  
 ```
 
 #### Docker Compose
@@ -67,7 +67,35 @@ This example uses the following open source libraries:
 * [Spring Boot](https://spring.io/projects/spring-boot)
 
 
-## Help
+## TESTING
+
+### Integration tests of the api using maven-failsafe plugin 
+In this testing profile we are embedded our test code into the code base and running the tests against a locally running API server.
+This API server is running the code locally and can be tested against other external API servers as well
+``` bash  
+mvn clean verify -P integration-tests  
+```
+To override the host to hit the API  
+``` bash 
+mvn clean verify -P integration-tests -DtestURL=http://localhost:8180 
+```
+ 
+### Integration of the API using Docker and Postman Collections and Environments  
+Prequisite: Install newman. newman is the command line runner for POSTMAN tests.
+``` bash 
+% npm install -g newman
+```
+This will run the default tests against a local running API server that will be running via docker compose.
+``` bash 
+mvn clean verify -P docker-integration-tests  
+```
+To override the host to hit by the API. In this project there are 2 environment files.
+1. local-dev  - this runs tests against an API instance running on the localhost in a docker container
+2. stage      - this is a simulated "stage" environment that also uses the localhost in a docker container 
+but it deomonstrates the ability to switch environments on each run on the tests.
+``` bash  
+mvn clean verify -P docker-integration-tests -Dpostman.env=stage  
+```
 
 
 ## License

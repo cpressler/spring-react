@@ -18,7 +18,7 @@ logging:
           springboot: debug
 
 server:
-  port : 8180
+  port : ${PORT:8180}
 
 
 management:

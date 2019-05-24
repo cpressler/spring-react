@@ -1,14 +1,6 @@
 #!/bin/bash
 
-# Login to  Docker Registry
-
-
-
-#docker login
-# wait for prompt for user password
-
 # Set directory. Need to get to root project  directory to execute
-
 
 # Set image version based on parameter passed in
 tagversion=$1
@@ -22,12 +14,21 @@ case "$tagversion" in
     ;;
 esac
 
-echo "Building the docker image now"
+#echo "Building the docker image now"
 # Build Image
 export BUILDVERSION=$1
 #env
 #echo $BUILDVERSION
-docker build -f docker/server/spring-react-qatest-be.Dockerfile . --tag softvisionlvcp/spring-react-qatest-be:$tagversion --build-arg buildversion=`echo $BUILDVERSION`
+
+if [ "$2" == "i" ]; then
+  echo "Building the backend docker image now"
+  # Push Image to repository
+  docker build -f docker/server/spring-react-qatest-be.Dockerfile . --tag softvisionlvcp/spring-react-qatest-be:$tagversion --build-arg buildversion=`echo $BUILDVERSION`
+else
+  echo "Docker image build not enable for backend"
+fi
+
+
 
 echo "testing if login is active"
 docker login
@@ -42,9 +43,17 @@ fi
 
 
 
-echo "Building the docker front end  image now"
+
 # now build the UI portion of this
-docker build -f docker/frontend/2stage-ui.Dockerfile .   --tag softvisionlvcp/spring-react-qatest-ui
+if [ "$2" == "i" ]; then
+  echo "Building the docker front end  image now"
+  # Push Image to repository
+  docker build -f docker/frontend/2stage-ui.Dockerfile .   --tag softvisionlvcp/spring-react-qatest-ui
+else
+  echo "Docker image not enabled for frontend ui"
+fi
+
+
 
 
 if [ "$2" == "p" ]; then

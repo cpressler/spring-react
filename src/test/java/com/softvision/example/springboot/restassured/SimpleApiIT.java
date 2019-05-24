@@ -2,8 +2,10 @@ package com.softvision.example.springboot.restassured;
 
 import com.softvision.example.springboot.JugToursApplication;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,9 @@ public class SimpleApiIT {
     private final Logger logger = LoggerFactory.getLogger(SimpleApiIT.class);
     private String testURL = System.getProperty("testURL") == null ? "http://localhost:8180" : System.getProperty("testURL");
 
-
+    @BeforeClass
+    public static void setup() {
+    }
 
     /**
      * make a request for the list of groups and it should equal to 4 which is our default count
@@ -48,8 +52,6 @@ public class SimpleApiIT {
     public void
     resource_returns_200_with_expected_id_and_name() {
         String jsonendpoint = testURL + "/api/groups/{id}";
-//        String jsonendpoint
-//                = "http://localhost:8180/api/groups/{id}";
 
         logger.debug("SimpleAPIIT:id:1");
         when().
