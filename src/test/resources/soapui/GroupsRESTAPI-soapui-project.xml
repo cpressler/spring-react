@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="849018aa-3497-483d-beb0-ba8d42109a89" activeEnvironment="Default" name="GroupsRESTAPI" resourceRoot="${projectDir}" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="0d68c5f6-9933-46b3-8884-defca01d73d5" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:8180" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://localhost:8180/</con:endpoint></con:endpoints><con:resource name="Groups" path="/api/groups/{id}" id="63d5059e-bc6a-49d6-bfc2-c46a23de1631"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value/><con:style>TEMPLATE</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="GroupList" id="7830df13-ec5f-4904-8caf-71339573c35a" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>200</con:status><con:params/><con:element>Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>404</con:status><con:params/><con:element xmlns:gro="http://localhost/api/groups/%7B1%7D/api/groups">gro:Fault</con:element></con:representation><con:request name="GetGroupsList" id="0f8a287d-03c1-4769-8af1-bac99948f82e" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8180/api/groups</con:endpoint><con:request/><con:originalUri>http://localhost/api/groups</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>id</con:entry></con:parameterOrder></con:request></con:method><con:method name="GroupById" id="b04f4418-a68d-4044-8252-e998c39ba002" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>200</con:status><con:params/><con:element>Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>404 400</con:status><con:params/><con:element xmlns:gro="http://localhost/api/groups">gro:Fault</con:element></con:representation><con:request name="GetRequestByResourceId" id="04c35824-6366-4944-aae2-9f6c002092c3" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8180/api/groups</con:endpoint><con:request/><con:originalUri>http://localhost/api/groups</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="1" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>id</con:entry></con:parameterOrder></con:request></con:method><con:method name="CreateGroup" id="7dd73621-0189-4d0d-94d0-b1b6c734207c" method="POST"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>404 405</con:status><con:params/><con:element xmlns:loc="http://localhost/">loc:Fault</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>201 200</con:status><con:params/><con:element xmlns:loc="http://localhost/">loc:Response</con:element></con:representation><con:request name="PostGroup" id="ab5f3578-c3c7-4cee-bd5e-ce01ec024663" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8180/</con:endpoint><con:request>{"id": null,"name":"AZ Softvision ","address":"ASU","city":"Scottsdale","stateOrProvince":"AZ","country":"USA","postalCode":"89111","user":null,"events":null}</con:request><con:originalUri>http://localhost/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="UpdateGroup" id="878981aa-62e5-4b8a-8614-5835718efcf9" method="PUT"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ns="http://localhost/api/groups/1">ns:Response</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="PutGroup" id="b412c81c-d43d-4054-8664-ba515a105e43" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8180/</con:endpoint><con:request>{"id":1,"name":"Denver JUG","address":"123","city":"Denver","stateOrProvince":null,"country":null,"postalCode":null,"user":null,"events":[{"id":5,"date":1544637600.000000000,"title":"Full Stack Reactive","description":"Reactive with Spring Boot + React","attendees":[]}]}</con:request><con:originalUri>http://localhost/api/groups/1</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="1" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method></con:resource></con:interface><con:testSuite id="fe4eba1b-fba9-47af-8f53-1b489d957eff" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="e66858e4-6fe5-4c6c-ae67-0ecea140fc1a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestGroupList" searchProperties="true"><con:settings/><con:testStep type="properties" name="Properties" id="62e8ae09-f739-4fa6-a61f-795ff9382737"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>id</con:name><con:value/></con:property></con:properties></con:config></con:testStep><con:testStep type="restrequest" name="GroupsList" id="28525f2a-f77d-4e9a-a6b7-be9cf7310e27"><con:settings/><con:config service="http://localhost:8180" resourcePath="/api/groups/{id}" methodName="GroupList" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GroupsList" id="0f8a287d-03c1-4769-8af1-bac99948f82e" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8180/</con:endpoint><con:request/><con:originalUri>http://localhost/api/groups</con:originalUri><con:assertion type="Valid HTTP Status Codes" id="cd85a8f0-2fe9-44c0-be7d-fc614d1aed22" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Simple Contains" id="d08a84fc-29d1-41ef-bc36-03480c84e2a3" name="Contains"><con:configuration><token>id</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="JsonPath Count" id="74c8fe88-697b-4bde-b939-ad805a2c642d" name="JsonPath Count"><con:configuration><path>$[*].id</path><content>4</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="aee08c4b-ab83-427b-8659-04132553356f" name="Script Assertion"><con:configuration><scriptText>/*Groovy Script Description:
+
+  - Gets the response using a SoapUI property expansion
+
+  - Load the schema from a file
+
+  - Validate the response against the schema using the library
+
+  - Fail the TestStep if the response doesn’t pass validation.*/
+
+import com.fasterxml.jackson.databind.JsonNode
+
+import com.fasterxml.jackson.databind.ObjectMapper
+
+import com.github.fge.jsonschema.core.report.ProcessingReport
+
+
+import com.github.fge.jsonschema.main.JsonSchemaFactory
+
+import com.github.fge.jsonschema.main.JsonSchema
+
+log.info("starting script test for group list")
+
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+
+//log.info("groovyUtils")
+
+def response = context.expand('${GroupsList#Response}')
+
+//log.info("response")
+
+ObjectMapper mapper = new ObjectMapper()
+
+JsonNode responseJSON = mapper.readTree(response)
+
+//log.info("responseJSON")
+
+def projectDir = context.expand('${projectDir}');
+log.info(projectDir)
+
+JsonNode responseSchemaJSON = mapper.readTree(new File(projectDir + "/schemas/groupItemList.txt"));
+
+
+
+JsonSchemaFactory factory = JsonSchemaFactory.byDefault()
+
+log.info("factory")
+
+JsonSchema responseSchema = factory.getJsonSchema(responseSchemaJSON)
+
+def test_Status=false
+
+//test_Status=true
+
+
+def ass = responseSchema.validInstance(responseJSON)
+
+
+log.info(responseSchemaJSON)
+
+ if (responseSchema.validInstance(responseJSON)) {
+
+  log.info("Response Validated!")
+
+  test_Status=true}
+
+else {
+  log.info("Response NOT Validated!")
+  log.info(responseSchema.validate(responseJSON).toString())
+
+}
+
+ assert test_Status==true</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder><con:entry>id</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="2b427286-cc26-4682-8380-69beeb777dc6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestGroupById" searchProperties="true"><con:settings/><con:testStep type="restrequest" name="GroupById" id="c64e53eb-e7d1-4ec3-b646-d520f1f23c53"><con:settings/><con:config service="http://localhost:8180" methodName="GroupById" resourcePath="/api/groups/{id}" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GroupById" id="91f58da9-c82c-4792-bcb4-a66327a7d687" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8180/</con:endpoint><con:request/><con:originalUri>http://localhost/api/groups/%7B1%7D/api/groups</con:originalUri><con:assertion type="Valid HTTP Status Codes" id="784cf067-06a0-43c1-8bf7-8f4e23296ac2" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="8286b686-3b5c-4f34-8fb9-c4bcb44c2992" name="Script Assertion"><con:configuration><scriptText>/*Groovy Script Description:
+
+  - Gets the response using a SoapUI property expansion
+
+  - Load the schema from a file
+
+  - Validate the response against the schema using the library
+
+  - Fail the TestStep if the response doesn’t pass validation.
+*/
+
+import com.fasterxml.jackson.databind.JsonNode
+
+import com.fasterxml.jackson.databind.ObjectMapper
+
+import com.github.fge.jsonschema.core.report.ProcessingReport
+
+
+import com.github.fge.jsonschema.main.JsonSchemaFactory
+
+import com.github.fge.jsonschema.main.JsonSchema
+
+log.info("starting script test by ID")
+
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+
+//log.info("groovyUtils")
+
+def response = context.expand('${GroupById#Response}')
+
+//log.info("response")
+
+ObjectMapper mapper = new ObjectMapper()
+
+JsonNode responseJSON = mapper.readTree(response)
+
+//log.info("responseJSON")
+
+def projectDir = context.expand('${projectDir}');
+log.info(projectDir)
+
+JsonNode responseSchemaJSON = mapper.readTree(new File(projectDir + "/schemas/groupItem.txt"));
+
+//log.info("responseSchemaJSON")
+//log.info(responseSchemaJSON)
+
+JsonSchemaFactory factory = JsonSchemaFactory.byDefault()
+
+log.info("factory")
+
+JsonSchema responseSchema = factory.getJsonSchema(responseSchemaJSON)
+
+def test_Status=false
+
+//test_Status=true
+
+
+def ass = responseSchema.validInstance(responseJSON)
+
+log.info(responseSchemaJSON)
+
+ if (responseSchema.validInstance(responseJSON)) {
+
+  log.info("Response Validated!")
+
+  test_Status=true}
+
+else {
+  log.info("Response NOT Validated!")
+  log.info(responseSchema.validate(responseJSON).toString())
+
+}
+
+ assert test_Status==true</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="1" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>id</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="64f4a719-9237-4f17-a0b3-1a1943474729" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCreateGroup" searchProperties="true"><con:settings/><con:testStep type="restrequest" name="GroupCreate" id="361d71c3-af37-43bd-a884-e010aaa58a10"><con:settings/><con:config service="http://localhost:8180" methodName="CreateGroup" resourcePath="/api/groups/{id}" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GroupCreate" id="9536450b-2079-44a7-8059-f01e1d200521" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8180/</con:endpoint><con:request>{"id": null,"name":"AZ2 Softvision ","address":"ASU","city":"Scottsdale","stateOrProvince":"AZ","country":"USA","postalCode":"89111","user":null,"events":null}</con:request><con:originalUri>http://localhost/api/groups/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="CreateGroup - UpdateGroup" id="c24cdd9d-b74c-41f6-aca7-51f2d0a41dbe"><con:settings/><con:config service="http://localhost:8180" resourcePath="/api/groups/{id}" methodName="CreateGroup" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="CreateGroup - UpdateGroup" id="c737b855-11b9-43c1-8146-8345369a4d3f" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8180/</con:endpoint><con:request>{"id": null,"name":"AZ2 Softvision ","address":"ASU","city":"Scottsdale","stateOrProvince":"AZ","country":"USA","postalCode":"89222","user":null,"events":null}</con:request><con:originalUri>http://localhost/api/groups/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="8" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>schemaDir</con:name><con:value>${projectDir}/groups</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

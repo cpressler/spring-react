@@ -262,25 +262,6 @@
 <!--                    </execution>-->
 <!--                </executions>-->
 <!--            </plugin>-->
-            <plugin>
-                <groupId>com.smartbear.soapui</groupId>
-                <artifactId>soapui-maven-plugin</artifactId>
-                <version>5.5.0</version>
-                <configuration>
-                    <projectFile>soapui/GroupsRESTAPI-soapui-project.xml</projectFile>
-                    <projectProperties>
-                        <value>message=Hello World!</value>
-                    </projectProperties>
-                    <outputFolder>soapui</outputFolder>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.jgoodies</groupId>
-                        <artifactId>jgoodies-forms</artifactId>
-                        <version>1.9.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
         </plugins>
     </build>
 
@@ -574,5 +555,68 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>soapui-integration-tests</id>
+            <properties>
+                <!-- onyl run integration tests and not unit tests here -->
+                <skip.unit.tests>true</skip.unit.tests>
+                <skip.integration.tests>false</skip.integration.tests>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.smartbear.soapui</groupId>
+                        <artifactId>soapui-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <version>5.5.0</version>
+                        <configuration>
+                            <projectFile>${project.basedir}/src/test/resources/soapui/GroupsRESTAPI-soapui-project.xml</projectFile>
+                            <projectProperties>
+                                <value>message=Hello World!</value>
+                            </projectProperties>
+                            <outputFolder>testOutput</outputFolder>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.jgoodies</groupId>
+                                <artifactId>jgoodies-forms</artifactId>
+                                <version>1.9.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    <!-- Setup/Teardown  environment for Integration Tests -->
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${version.springframework.boot}</version>
+                        <executions>
+                            <!-- NOTE log levels are controlled by src/main/resources/application.yml
+                                 since this is run outside of the test runner.
+                             -->
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 </project>

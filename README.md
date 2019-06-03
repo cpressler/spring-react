@@ -97,6 +97,11 @@ but it deomonstrates the ability to switch environments on each run on the tests
 mvn clean verify -P docker-integration-tests -Dpostman.env=stage  
 ```
 
+### Integration Tests using SOAPUI
+
+There is an example of how to use the SOAPUI appplication to run integration tests as well.
+These tests can be created in the SOAPUI application and then saved into the proper directory to 
+be run by maven using the proper test profile (soapui-integration-tests).
 
 ## License
 

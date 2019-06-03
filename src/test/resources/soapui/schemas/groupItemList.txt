@@ -1,0 +1,211 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "null"
+        },
+        "city": {
+          "type": "null"
+        },
+        "stateOrProvince": {
+          "type": "null"
+        },
+        "country": {
+          "type": "null"
+        },
+        "postalCode": {
+          "type": "null"
+        },
+        "user": {
+          "type": "null"
+        },
+        "events": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "date": {
+                  "type": "number"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "attendees": {
+                  "type": "array",
+                  "items": {}
+                }
+              },
+              "required": [
+                "id",
+                "date",
+                "title",
+                "description",
+                "attendees"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "address",
+        "city",
+        "stateOrProvince",
+        "country",
+        "postalCode",
+        "user",
+        "events"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "null"
+        },
+        "city": {
+          "type": "null"
+        },
+        "stateOrProvince": {
+          "type": "null"
+        },
+        "country": {
+          "type": "null"
+        },
+        "postalCode": {
+          "type": "null"
+        },
+        "user": {
+          "type": "null"
+        },
+        "events": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "address",
+        "city",
+        "stateOrProvince",
+        "country",
+        "postalCode",
+        "user",
+        "events"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "null"
+        },
+        "city": {
+          "type": "null"
+        },
+        "stateOrProvince": {
+          "type": "null"
+        },
+        "country": {
+          "type": "null"
+        },
+        "postalCode": {
+          "type": "null"
+        },
+        "user": {
+          "type": "null"
+        },
+        "events": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "address",
+        "city",
+        "stateOrProvince",
+        "country",
+        "postalCode",
+        "user",
+        "events"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "null"
+        },
+        "city": {
+          "type": "null"
+        },
+        "stateOrProvince": {
+          "type": "null"
+        },
+        "country": {
+          "type": "null"
+        },
+        "postalCode": {
+          "type": "null"
+        },
+        "user": {
+          "type": "null"
+        },
+        "events": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "address",
+        "city",
+        "stateOrProvince",
+        "country",
+        "postalCode",
+        "user",
+        "events"
+      ]
+    }
+  ]
+}
