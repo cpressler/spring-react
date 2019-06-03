@@ -1,0 +1,1 @@
+{"id":1,"name":"Denver JUG","address":"123","city":null,"stateOrProvince":null,"country":null,"postalCode":null,"user":null,"events":[{"id":5,"date":1544637600,"title":"Full Stack Reactive","description":"Reactive with Spring Boot + React","attendees":[]}]}
