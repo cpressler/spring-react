@@ -674,8 +674,8 @@
                         </executions>
                         <version>${gatling.version}</version>
                         <configuration>
-<!--                            <simulationClass>RecordedSimulation</simulationClass>                               &lt;!&ndash; the name of the single Simulation class to run &ndash;&gt;-->
-<!--                            <runMultipleSimulations>false</runMultipleSimulations>                   &lt;!&ndash; if the plugin should run multiple simulations sequentially &ndash;&gt;-->
+                            <simulationClass>com.softvision.qaautomation.RecordedSimulation</simulationClass>                               <!-- the name of the single Simulation class to run -->
+                            <runMultipleSimulations>false</runMultipleSimulations>                   <!-- if the plugin should run multiple simulations sequentially -->
 <!--                            <includes>                                                               &lt;!&ndash; include filters, see dedicated section below &ndash;&gt;-->
 <!--                                <include></include>-->
 <!--                            </includes>-->
@@ -702,9 +702,9 @@
 <!--                                <extraScalacOption></extraScalacOption>-->
 <!--                            </extraScalacOptions>-->
 <!--                            <disableCompiler>false</disableCompiler>                                 &lt;!&ndash; if compiler should be disabled, typically because another plugin has already compiled sources &ndash;&gt;-->
-<!--                            <simulationsFolder>${project.basedir}/src/test/scala</simulationsFolder> &lt;!&ndash; where the simulations to be compiled are located &ndash;&gt;-->
-<!--                            <resourcesFolder>${project.basedir}/src/test/resources</resourcesFolder> &lt;!&ndash; where the test resources are located &ndash;&gt;-->
-<!--                            <resultsFolder>${project.basedir}/target/gatling</resultsFolder>         &lt;!&ndash; where the simulation log and the HTML reports will be generated &ndash;&gt;-->
+                            <simulationsFolder>${project.basedir}/src/test/scala</simulationsFolder> <!-- where the simulations to be compiled are located -->
+                            <resourcesFolder>${project.basedir}/src/test/resources</resourcesFolder> <!-- where the test resources are located -->
+                            <resultsFolder>${project.basedir}/target/gatling</resultsFolder>         <!-- where the simulation log and the HTML reports will be generated -->
                         </configuration>
                     </plugin>
                 </plugins>

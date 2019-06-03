@@ -37,5 +37,9 @@ class RecordedSimulation extends Simulation {
 			.resources(http("request_3")
 			.get("/api/groups")))
 
-	setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
+//	setUp(scn.inject(atOnceUsers(50))).protocols(httpProtocol)
+
+	setUp(
+		scn.inject(rampUsers(30) during (10 seconds))).protocols(httpProtocol)
+
 }
