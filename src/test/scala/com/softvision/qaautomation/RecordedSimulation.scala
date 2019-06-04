@@ -8,8 +8,11 @@ import io.gatling.jdbc.Predef._
 
 class RecordedSimulation extends Simulation {
 
+	// update to any passed in base url via jvm args
+	val targetUrl = sys.props.getOrElse("targetUrl", "http://localhost:9000")
+
 	val httpProtocol = http
-		.baseUrl("http://localhost:9000")
+		.baseUrl(targetUrl)
 		.inferHtmlResources()
 		.acceptHeader("*/*")
 		.acceptEncodingHeader("gzip, deflate")

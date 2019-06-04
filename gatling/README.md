@@ -20,16 +20,21 @@ NOTES:
 ### Gatling Recorder Proxy mode
 
 #### Run Gatling Prxoy mode recorder   
+```bash
 mvn gatling:recorder -P scala-integration-tests
+```
+
 
 Configuring the Recorder
-First of all launch the Recorder class from the IDE.   
+First of all launch the Recorder class from the IDE.  
+```bash
 mvn gatling:recorder -P scala-integration-tests
 
+``` 
 Once launched, the GUI lets you configure how requests and responses will be recorded. Choose the following options:
 
 8000 as listening port
-org.baeldung.simulation package
+com.softvision.xxxx package
 RecordedSimulation class name
 Follow Redirects? checked
 Automatic Referers? checked
@@ -95,3 +100,32 @@ mvn gatling:test -P scala-tests -DrunMultipleSimulations=true
 
 mvn clean verify -P scala-integration-tests  -DrunMultipleSimulations=true
 ``` 
+
+#### Changing runtime variables via maven properties and jvm arguments  
+
+Changing a runtime variable will allow you to target different test environments. This means that automated testing
+pipelines can be run from a lower environment to production such as, integration to QA to then Staging before going to production.
+
+
+1 Define a maven property
+```xml
+   <properties>
+   <scala.target.base.url>http://localhost:9000</scala.target.base.url>   
+   </properties>
+```
+2 Pass the value via a jvm argument
+```xml
+   <jvmArgs>   
+       <jvmArg>-DtargetURL=${scala.target.base.url}</jvmArg>                                       <!-- pass extra parameters to the Gatling JVM -->
+   </jvmArgs>   
+```
+3 Add a reading and setting of the value in the Simulation code
+	update to any passed in base url via jvm args   
+```scala
+    val targetUrl = sys.props.getOrElse("targetUrl", "http://localhost:9000")    
+    val httpProtocol = http   
+        .baseUrl(targetUrl)   
+        .acceptHeader("*/*")   
+        .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")   		
+```
+	

@@ -13,9 +13,24 @@ Save the tests into the Maven project folder **src/test/resources/postman**
 
 ##Executing the Tests for Postman
 
+Postman tests can be run with either a docker container or via spring boot plugin.
+Below is how to run the test using a spring boot runtime
 
+#### Spring Boot integration tests
+This requires no installation of docker to run the tests.
 ```bash
-mvn clean verify -P docker-integration-tests
+mvn clean verify -P postman-spring-integration-tests
+```
+This command will 
+
+1. start up a working API, via spring boot, to be used in the tests
+2. Execute the tests
+3. stop the working API
+
+#### Docker integration tests
+This requires a valid installation of docker to run the tests.
+```bash
+mvn clean verify -P postman-docker-integration-tests
 ```
 This command will 
 

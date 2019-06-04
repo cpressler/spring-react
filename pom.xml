@@ -33,6 +33,7 @@
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
         <gatling.version>3.0.2</gatling.version>
+        <gatling.plugin.version>3.0.2</gatling.plugin.version>
     </properties>
 
     <pluginRepositories>
@@ -435,10 +436,11 @@
             </build>
         </profile>
         <profile>
-            <id>docker-integration-tests</id>
+            <id>postman-docker-integration-tests</id>
             <properties>
                 <!-- onyl run integration tests and not unit tests here -->
                 <postman.env>local-dev</postman.env>
+                <skip.unit.tests>true</skip.unit.tests>
                 <skip.integration.tests>false</skip.integration.tests>
             </properties>
             <build>
@@ -465,7 +467,7 @@
                             </execution>
                             <execution>
                                 <id>integration-tests</id>
-                                <phase>test</phase>
+                                <phase>integration-test</phase>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
@@ -497,6 +499,69 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>postman-spring-integration-tests</id>
+            <properties>
+                <!-- onyl run integration tests and not unit tests here -->
+                <postman.env>local-dev</postman.env>
+                <skip.unit.tests>true</skip.unit.tests>
+                <skip.integration.tests>false</skip.integration.tests>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- Setup/Teardown  environment for Integration Tests -->
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${version.springframework.boot}</version>
+
+                        <executions>
+                            <!-- NOTE log levels are controlled by src/main/resources/application.yml
+                                 since this is run outside of the test runner.
+                             -->
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>integration-tests</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>newman</executable> <!-- install first npm install -g newman -->
+                                    <commandlineArgs>
+                                        run src/test/resources/postman/GroupsApi.postman_collection.json -e   src/test/resources/postman/envs/${postman.env}.postman_environment.json
+                                    </commandlineArgs>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Deploy current build artifact to Docker container -->
+                </plugins>
+            </build>
+        </profile>
+
         <profile>
             <id>integration-tests</id>
             <properties>
@@ -621,6 +686,7 @@
                 <skip.unit.tests>true</skip.unit.tests>
                 <skip.integration.tests>false</skip.integration.tests>
                 <scala.api.host.url>http://localhost:8180</scala.api.host.url>
+                <scala.target.base.url>http://localhost:9000</scala.target.base.url>
             </properties>
             <build>
                 <plugins>
@@ -672,9 +738,11 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <version>${gatling.version}</version>
+                        <version>${gatling.plugin.version}</version>
                         <configuration>
+<!--                            <simulationClass>computerdatabase.BasicSimulation</simulationClass>-->
                             <simulationClass>com.softvision.qaautomation.RecordedSimulation</simulationClass>                               <!-- the name of the single Simulation class to run -->
+                            <!-- the name of the single Simulation class to run -->
                             <runMultipleSimulations>false</runMultipleSimulations>                   <!-- if the plugin should run multiple simulations sequentially -->
 <!--                            <includes>                                                               &lt;!&ndash; include filters, see dedicated section below &ndash;&gt;-->
 <!--                                <include></include>-->
@@ -689,11 +757,11 @@
 <!--                            <failOnError>false</failOnError>                                          &lt;!&ndash; report failure in case of assertion failure, typically to fail CI pipeline &ndash;&gt;-->
 <!--                            <continueOnAssertionFailure>false</continueOnAssertionFailure>           &lt;!&ndash; keep on executing multiple simulations even if one fails &ndash;&gt;-->
 <!--                            <useOldJenkinsJUnitSupport>false</useOldJenkinsJUnitSupport>             &lt;!&ndash; report results to Jenkins JUnit support (workaround until we manage to get Gatling support into Jenkins) &ndash;&gt;-->
-<!--                            <jvmArgs>-->
-<!--                                <jvmArg>-DmyExtraParam=foo</jvmArg>                                    &lt;!&ndash; pass extra parameters to the Gatling JVM &ndash;&gt;-->
-<!--                            </jvmArgs>-->
+                            <jvmArgs>
+                                <jvmArg>-DtargetURL=${scala.target.base.url}</jvmArg>                                    <!-- pass extra parameters to the Gatling JVM -->
+                            </jvmArgs>
 <!--                            <overrideJvmArgs>false</overrideJvmArgs>                                 &lt;!&ndash; if above option should override the defaults instead of replacing them &ndash;&gt;-->
-<!--                            <propagateSystemProperties>true</propagateSystemProperties>              &lt;!&ndash; if System properties from the maven JVM should be propagated to the Gatling forked one &ndash;&gt;-->
+                            <propagateSystemProperties>true</propagateSystemProperties>              <!-- if System properties from the maven JVM should be propagated to the Gatling forked one -->
 <!--                            <compilerJvmArgs>-->
 <!--                                <compilerJvmArg>-DmyExtraParam=foo</compilerJvmArg>                    &lt;!&ndash; pass extra parameters to the Compiler JVM &ndash;&gt;-->
 <!--                            </compilerJvmArgs>-->
@@ -703,7 +771,7 @@
 <!--                            </extraScalacOptions>-->
 <!--                            <disableCompiler>false</disableCompiler>                                 &lt;!&ndash; if compiler should be disabled, typically because another plugin has already compiled sources &ndash;&gt;-->
                             <simulationsFolder>${project.basedir}/src/test/scala</simulationsFolder> <!-- where the simulations to be compiled are located -->
-                            <resourcesFolder>${project.basedir}/src/test/resources</resourcesFolder> <!-- where the test resources are located -->
+                            <resourcesFolder>${project.basedir}/src/test/resources/gatling</resourcesFolder> <!-- where the test resources are located -->
                             <resultsFolder>${project.basedir}/target/gatling</resultsFolder>         <!-- where the simulation log and the HTML reports will be generated -->
                         </configuration>
                     </plugin>
