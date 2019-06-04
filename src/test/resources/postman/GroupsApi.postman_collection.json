@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "7f7fb945-9b12-4ede-870b-a893ff4d0622",
+		"name": "GroupsApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET {{hostname}}:{{port}}/api/groups/2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":2,\"name\":\"Utah JUG\", \"address\": \"456 Main St\",\"city\":\"SaltLakeCity\",\"stateOrProvince\":null,\"country\":null,\"postalCode\":null,\"user\":null,\"events\":[]}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/groups/{{id}}",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"groups",
+						"{{id}}"
+					]
+				},
+				"description": "getGroupByID"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT {{hostname}}:{{port}}/api/groups/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39c8b8c4-9aa6-4c40-9b08-1c1daa15764a",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"id is valid\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    console.log(jsonData.id);",
+							"    pm.expect(jsonData.id).to.eql(2);",
+							"    pm.environment.set(\"id\", jsonData.id);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":2,\"name\":\"Utah JUG\", \"address\": \"456 Main St\",\"city\":\"SaltLakeCity\",\"stateOrProvince\":null,\"country\":null,\"postalCode\":null,\"user\":null,\"events\":[]}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/groups/{{id}}",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"groups",
+						"{{id}}"
+					]
+				},
+				"description": "PutGrouopById"
+			},
+			"response": []
+		},
+		{
+			"name": "GetGroupListNoTrailSlash {{hostname}}:{{port}}/api/groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d062207f-9a80-4d2a-898b-634c9735bda4",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":2,\"name\":\"Utah JUG\", \"address\": \"456 Main St\",\"city\":\"SaltLakeCity\",\"stateOrProvince\":null,\"country\":null,\"postalCode\":null,\"user\":null,\"events\":[]}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/groups",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"groups"
+					]
+				},
+				"description": "GetGroupListNoTrailSlash"
+			},
+			"response": []
+		},
+		{
+			"name": "GetGroupList {{hostname}}:{{port}}/api/groups/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "89a6aeb6-b3be-439a-9a4c-16bb9d74ee78",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":2,\"name\":\"Utah JUG\", \"address\": \"456 Main St\",\"city\":\"SaltLakeCity\",\"stateOrProvince\":null,\"country\":null,\"postalCode\":null,\"user\":null,\"events\":[]}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/groups/",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"groups",
+						""
+					]
+				},
+				"description": "GetGroupList"
+			},
+			"response": []
+		},
+		{
+			"name": "GetByIdNotFound {{hostname}}:{{port}}/api/groups/{{id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3778366e-0173-4ea0-94d3-2192c0294760",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":2,\"name\":\"Utah JUG\", \"address\": \"456 Main St\",\"city\":\"SaltLakeCity\",\"stateOrProvince\":null,\"country\":null,\"postalCode\":null,\"user\":null,\"events\":[]}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/groups/200",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"groups",
+						"200"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST {{hostname}}:{{port}}/api/groups/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f900b0a-66e2-4740-a0c2-86de8e3cc478",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"update id in env for post\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"id\", jsonData.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":null,\"name\":\"Softvision JUG\", \"address\": \"Galleria Mall\",\"city\":\"Henderson\",\"stateOrProvince\":\"NV\",\"country\":\"USA\",\"postalCode\":\"89012\",\"user\":null,\"events\":[]}"
+				},
+				"url": {
+					"raw": "{{hostname}}:{{port}}/api/groups/",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"groups",
+						""
+					]
+				},
+				"description": "POSTNewGroup"
+			},
+			"response": []
+		},
+		{
+			"name": "Del Group",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/groups/{{id}}",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"groups",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
