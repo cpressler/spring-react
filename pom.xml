@@ -26,6 +26,7 @@
         <node.version>v10.13.0</node.version>
         <yarn.version>v1.12.1</yarn.version>
         <version.springframework.boot>${project.parent.version}</version.springframework.boot>
+        <version.springframework.cloud>Greenwich.RELEASE</version.springframework.cloud>
         <version.springfox>2.9.2</version.springfox>
         <version.swagger.annotations>1.5.18</version.swagger.annotations>
         <plugin.version.git-commit-id-plugin>2.2.4</plugin.version.git-commit-id-plugin>
@@ -42,6 +43,25 @@
             <url>http://www.soapui.org/repository/maven2/</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.springframework.boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${version.springframework.cloud}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- adds /actuator endpoints for metrics -->
@@ -83,6 +103,17 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-all</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-zipkin</artifactId>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

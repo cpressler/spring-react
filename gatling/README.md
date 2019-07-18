@@ -44,7 +44,7 @@ Black list first filter strategy selected
 
 ![Screenshot](images/gatling-proxy-app.png)
 
-#### Configure Browser to use Gatl;ing proxy to record Simulation
+#### Configure Browser to use Gatling proxy to record Simulation
 Now we have to configure our browser to use the defined port (8000) chosen during the configuration. This is the port our browser must connect to so that the Recorder is able to capture our navigation.
 
 Here is how to do with Firefox, open the browser Advanced settings, then go to the Network panel and update the connection settings:   

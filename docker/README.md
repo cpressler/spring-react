@@ -21,7 +21,7 @@ with each other such as a UI that needs to talk to a backend system API. This is
 full end to end integration testing.
  ```bash
  cd $projectDir/docker
- docker compose up
+ docker-compose up
  
  ctl C to quit
  

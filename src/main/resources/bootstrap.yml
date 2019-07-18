@@ -1,0 +1,14 @@
+
+spring:
+  application:
+    name: @project.artifactId@
+  cloud:
+    consul:
+      binder:
+        enabled: false
+      discovery:
+        fail-fast: false
+        enabled: false
+      config:
+        enabled: false
+      enabled: false

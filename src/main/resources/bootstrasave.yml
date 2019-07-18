@@ -1,0 +1,14 @@
+
+spring:
+  application:
+    name: @project.artifactId@
+#      cloud:
+#        consul:
+#          host: ${CONSUL_HOST:localhost}
+#          port: ${CONSUL_PORT:8500}
+#          retry:
+#            initial-interval: 1000
+#            max-attempts: 6
+#            max-interval: 2000
+#            multiplier: 1.1
+

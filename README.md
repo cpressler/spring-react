@@ -39,13 +39,13 @@ yarn && yarn start
 #### Docker image and compose
 To build the images for both front end and backend  
 ```bash
-mvn clean install -P build-docker-image  
+mvn clean install -Pbuild-docker-image  
 ```
 
 
 To build the images for both front end and backend  and push to docker hub  
 ```bash
-mvn install -P push-docker-image  
+mvn install -Ppush-docker-image  
 ```
 
 #### Docker Compose
@@ -87,7 +87,7 @@ Prequisite: Install newman. newman is the command line runner for POSTMAN tests.
 ```
 This will run the default tests against a local running API server that will be running via docker compose.
 ``` bash 
-mvn clean verify -P docker-integration-tests  
+mvn clean verify -P postman-docker-integration-tests  
 ```
 To override the host to hit by the API. In this project there are 2 environment files.
 1. local-dev  - this runs tests against an API instance running on the localhost in a docker container
@@ -102,6 +102,17 @@ mvn clean verify -P docker-integration-tests -Dpostman.env=stage
 There is an example of how to use the SOAPUI appplication to run integration tests as well.
 These tests can be created in the SOAPUI application and then saved into the proper directory to 
 be run by maven using the proper test profile (soapui-integration-tests).
+
+```bash
+mvn clean verify -P soapui-integration-tests
+```
+
+
+### To runn ALL the Integration Tests
+
+```bash
+% ./src/test/runtests.sh
+```
 
 ## License
 
