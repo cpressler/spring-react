@@ -17,3 +17,29 @@ logging:
         example:
           springboot: info
 
+
+spring:
+  cloud:
+    consul:
+      binder:
+        enabled: ${CONSUL_ENABLE:false}
+      discovery:
+                health-check-interval: 30s
+                health-check-path: /actuator/health
+                instance-id: ${spring.application.name}:${localhost-name:${random.value}}
+                tags: management.context-path=actuator, health.path=/health
+                management-tags: management.context-path=actuator, health.path=/actuator/health
+        fail-fast: false
+        enabled: true
+      config:
+        enabled: false
+      enabled: ${CONSUL_ENABLE:false}
+    bus:
+      enabled: false
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
+      retry:
+        initial-interval: 1000
+        max-attempts: 6
+        max-interval: 2000
+        multiplier: 1.1

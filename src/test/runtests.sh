@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 cd ../../
-
 mvn clean verify -P integration-tests
 
 
