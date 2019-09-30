@@ -48,7 +48,7 @@ fi
 if [ "$2" == "i" ]; then
   echo "Building the docker front end  image now"
   # Push Image to repository
-  docker build -f docker/frontend/2stage-ui.Dockerfile .   --tag softvisionlvcp/spring-react-qatest-ui
+  docker build -f docker/frontend/2stage-ui.Dockerfile .   --tag softvisionlvcp/spring-react-qatest-ui:latest
 else
   echo "Docker image not enabled for frontend ui"
 fi

@@ -14,10 +14,15 @@ export default class AppNavbar extends Component {
       isOpen: !this.state.isOpen
     });
   }
+/*
+      <NavbarBrand tag={Link} to={`${process.env.PUBLIC_URL}/`}>Home</NavbarBrand>
 
+      <NavbarBrand tag={Link} to={"/"}>Home</NavbarBrand>
+
+ */
   render() {
     return <Navbar color="dark" dark expand="md">
-      <NavbarBrand tag={Link} to="/">Home</NavbarBrand>
+      <NavbarBrand tag={Link} to={"/"}>Home</NavbarBrand>
       <NavbarToggler onClick={this.toggle}/>
       <Collapse isOpen={this.state.isOpen} navbar>
         <Nav className="ml-auto" navbar>
@@ -26,7 +31,7 @@ export default class AppNavbar extends Component {
               href="https://twitter.com/cpressler">@cpressler</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://github.com/cpressler/spring-react.git">GitHub</NavLink>
+            <NavLink href="https://gitlab.com/cpressler63/spring-react">GitHub</NavLink>
           </NavItem>
         </Nav>
       </Collapse>

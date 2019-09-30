@@ -59,8 +59,14 @@ class GroupEdit extends Component {
       },
       body: JSON.stringify(item),
     });
-    this.props.history.push('/groups');
+    // this.props.history.push(`${process.env.PUBLIC_URL}` + "/groups");
+    this.props.history.push("/groups");
   }
+
+  /*
+  <Button color="secondary" tag={Link} to={`${process.env.PUBLIC_URL}` + "/groups"}>Cancel</Button>
+  <Button color="secondary" tag={Link} to= "/groups">Cancel</Button>
+   */
 
   render() {
     const {item} = this.state;
@@ -105,7 +111,7 @@ class GroupEdit extends Component {
           </div>
           <FormGroup>
             <Button color="primary" type="submit">Save</Button>{' '}
-            <Button color="secondary" tag={Link} to="/groups">Cancel</Button>
+            <Button color="secondary" tag={Link} to= "/groups">Cancel</Button>
           </FormGroup>
         </Form>
       </Container>
