@@ -22,7 +22,8 @@ export BUILDVERSION=$1
 
 if [ "$2" == "i" ]; then
   echo "Building the backend docker image now"
-  # Push Image to repository
+  # example
+  # docker build -f docker/server/spring-react-qatest-be.Dockerfile . --tag softvisionlvcp/spring-react-qatest-be:latest --build-arg buildversion=0.0.1-SNAPSHOT
   docker build -f docker/server/spring-react-qatest-be.Dockerfile . --tag softvisionlvcp/spring-react-qatest-be:$tagversion --build-arg buildversion=`echo $BUILDVERSION`
 else
   echo "Docker image build not enable for backend"

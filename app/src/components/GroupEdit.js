@@ -59,7 +59,8 @@ class GroupEdit extends Component {
       },
       body: JSON.stringify(item),
     });
-    // this.props.history.push(`${process.env.PUBLIC_URL}` + "/groups");
+    //this.props.history.push(`${process.env.PUBLIC_URL}` + "/groups");
+    // this is all we need for root and non root apps
     this.props.history.push("/groups");
   }
 

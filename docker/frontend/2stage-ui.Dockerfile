@@ -6,7 +6,7 @@ RUN yarn
 RUN yarn build
 
 # Stage 2 - the production environment
-FROM nginx:alpine
+FROM nginx:1.17-alpine
 
 RUN apk add --no-cache curl
 

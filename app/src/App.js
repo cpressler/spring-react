@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
-import Home from './Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import GroupList from './GroupList';
-import GroupEdit from './GroupEdit';
-import TestLoad from './TestLoad';
+import './App.css';
+import Home from './components/Home';
+import GroupList from './components/GroupList';
+import GroupEdit from './components/GroupEdit';
+import TestLoad from './components/TestLoad';
 
 /*   "homepage" : "http://localhost:8080/demo/",
  */
@@ -32,17 +32,21 @@ import TestLoad from './TestLoad';
             <Route path= "/testload" exact={true} component={TestLoad}/>
           </Switch>
         </Router>
+
+        <Route path= "/groups"  exact component={GroupList}/>
+                <Route path= "/groups/:id"  exact component={GroupEdit}/>
  */
 
 class App extends Component {
   render() {
     return (
-        <Router basename={`${process.env.PUBLIC_URL}`} >
+        <Router basename={"/demo"}>
             <Switch>
-                <Route path="/" exact={true} component={Home}/>
-                <Route path= "/groups"  exact={true} component={GroupList}/>
-                <Route path= "/groups/:id" exact={true} component={GroupEdit}/>
-                <Route path= "/testload"  exact={true} component={TestLoad}/>
+                <Route path="/" exact component={Home}/>
+                <Route path= "/groups"  exact component={GroupList}/>
+                <Route path= "/groups/:id"  exact component={GroupEdit}/>
+
+                <Route path= "/testload"  exact component={TestLoad}/>
             </Switch>
         </Router>
     )

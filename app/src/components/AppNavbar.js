@@ -31,7 +31,7 @@ export default class AppNavbar extends Component {
               href="https://twitter.com/cpressler">@cpressler</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://gitlab.com/cpressler63/spring-react">GitHub</NavLink>
+            <NavLink href="https://gitlab.com/cpressler63/spring-react">GitLab</NavLink>
           </NavItem>
         </Nav>
       </Collapse>

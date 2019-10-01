@@ -114,6 +114,128 @@ mvn clean verify -P soapui-integration-tests
 % ./src/test/runtests.sh
 ```
 
+# swagger configuration guidelines are here 
+[Spring Boot and Swagger/Ngix Reverse Proxy Howto](https://vkuzel.com/configuration-of-a-nginx-reverse-proxy-in-front-of-a-spring-boot-2-1-application-protected-by-oauth-2-0
+)  
+The above link can be summarized here.  
+In order to reverse proxy the swagger pages behind an nginx frontend you need to do two things
+1) modify nginx.conf to forward proxy information
+2) setup spring boot application to use forwarded-headers
+
+nginx.conf
+```nginx
+
+  # separate out the  port from the host
+  # HOST header ( $http_host) can come in like this demo.com:9000 and it will set the port properly in the forwarded requests
+  map $http_host $external_port {
+    ~*^([A-Za-z0-9\-\.]+):([0-9]+) $2;
+    default      '';
+  }
+
+    # location of the API to serve off the front end application
+    location /api {
+      error_log /tmp/api-error.log debug;
+      proxy_pass http://localhost:8180/api;
+      proxy_set_header   X-Real-IP        $remote_addr;
+      proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+      proxy_set_header   Host             $host;
+    }
+    
+    # access to the swagger pages requires a couple 
+    location  /swagger-ui.html {
+        proxy_pass http://localhost:8180/swagger-ui.html;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # cannot use this since its not set in the request from the docker host
+        #proxy_set_header   X-Forwarded-Port  $server_port;
+        proxy_set_header   X-Forwarded-Port  $external_port;
+        proxy_set_header   X-Forwarded-Prefix  $http_x_forwarded_prefix;
+     }
+     
+    location /webjars {
+        proxy_pass         http://localhost:8180; #change to your port
+        proxy_redirect     off;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # cannot use this since its not set in the request from the docker host
+        #proxy_set_header   X-Forwarded-Port  $server_port;
+        proxy_set_header   X-Forwarded-Port  $external_port;
+        proxy_set_header   X-Forwarded-Prefix  $http_x_forwarded_prefix;
+    }     
+      
+    location /v2 {
+        proxy_pass http://localhost:8180/v2;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # cannot use this since its not set in the request from the docker host
+        #proxy_set_header   X-Forwarded-Port  $server_port;
+        proxy_set_header   X-Forwarded-Port  $external_port;
+        proxy_set_header   X-Forwarded-Prefix  $http_x_forwarded_prefix;
+    }
+              
+    location /swagger-resources {
+        proxy_pass http://localhost:8180/swagger-resources;
+    }
+    
+    # if you need access to the actuator endpoints this is needed to fix the urls
+    location /actuator {
+        proxy_pass http://localhost:8180/actuator;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # cannot use this since its not set in the request from the docker host
+        #proxy_set_header   X-Forwarded-Port  $server_port;
+        proxy_set_header   X-Forwarded-Port  $external_port;
+        proxy_set_header   X-Forwarded-Prefix  $http_x_forwarded_prefix;
+    }
+    
+    #for the above none of these are needed
+    #proxy_set_header   X-Forwarded-Host $host:$server_port;
+    #proxy_set_header   X-Real-IP        $remote_addr;
+    #proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+```
+
+spring boot configuration in application.yml
+```yaml
+server:
+  port : ${PORT:8180}
+  use-forward-headers: true  # allows handling of nginx reverse proxy
+```
+spring boot configuration to debug incoming headers to verify proper headers are sent
+```yaml
+logging:
+  path: .
+  file: ${logging.path}/react.log
+  level:
+    root: info
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
+      apache:
+        coyote:
+          http11:
+            Http11InputBuffer: DEBUG
+        catalina:
+          valves:
+            RemoteIpValve: DEBUG
+
+```
+need to add this bean to your application file JugToursApplication to allow headers to pass
+```java
+    @Bean
+    public FilterRegistrationBean<ForwardedHeaderFilter> forwardedHeaderFilterFilterRegistrationBean() {
+        ForwardedHeaderFilter forwardedHeaderFilter = new ForwardedHeaderFilter();
+        FilterRegistrationBean<ForwardedHeaderFilter> bean = new FilterRegistrationBean<>(forwardedHeaderFilter);
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return bean;
+    }
+```
+
+
+## NGINX Reverse proxy with dockder containers
+https://tutorials.technology/tutorials/30-how-to-use-nginx-reverse-proxy-with-docker.html
 ## License
 
 Apache 2.0, see [LICENSE](LICENSE).

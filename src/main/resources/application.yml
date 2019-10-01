@@ -17,9 +17,23 @@ logging:
         example:
           springboot: debug
 #    org.springframework.cloud.consul.discovery: trace
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
+      apache:
+        coyote:
+          http11:
+            Http11InputBuffer: DEBUG
+        catalina:
+          valves:
+            RemoteIpValve: DEBUG
+
 
 server:
   port : ${PORT:8180}
+  use-forward-headers: true  # allows handling of nginx reverse proxy
 
 
 spring:
