@@ -40,7 +40,7 @@ import TestLoad from './components/TestLoad';
 class App extends Component {
   render() {
     return (
-        <Router basename={"/demo"}>
+        <Router basename={`${process.env.PUBLIC_URL}`}>
             <Switch>
                 <Route path="/" exact component={Home}/>
                 <Route path= "/groups"  exact component={GroupList}/>

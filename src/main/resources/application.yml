@@ -29,6 +29,10 @@ logging:
         catalina:
           valves:
             RemoteIpValve: DEBUG
+        tomcat:
+          util:
+            http:
+              Rfc6265CookieProcessor: DEBUG
 
 
 server:
